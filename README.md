@@ -5,5 +5,8 @@
 ## How to run app
 
 - in order to run app run these commands
-- - py -3 -m venv .venv
-- - .venv\Scripts\activate   
+  - `py -3 -m venv .venv`
+  - `.venv\Scripts\activate`   
+  - `pip install -r .\requirements.txt`
+
+- now just run `flask run` command, and your app is running
