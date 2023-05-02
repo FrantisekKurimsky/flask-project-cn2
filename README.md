@@ -10,3 +10,8 @@
   - `pip install -r .\requirements.txt`
 
 - now just run `flask run` command, and your app is running
+
+## How it looks
+
+![Picture 1](/assets/home.png)
+![Picture 2](/assets/results.png)
