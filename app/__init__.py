@@ -19,11 +19,15 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
+    file = None
+    attributes = None
+    target_attr = None
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
+        file = None
         file = request.files['file']
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
@@ -31,15 +35,16 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            # filename = secure_filename(file.filename)
             data = pd.read_csv(file)
             attributes = data.columns.values.tolist()[:-1]
             attrs = attributes.copy()
             target_attr = data.columns.values.tolist()[-1]
             rules = cn2(data.to_dict('records'), attributes, target_attr)
             rules, default_rule, default_conclusion = return_rules(rules)
-            default_rule = pd.DataFrame(default_rule)
-            return render_template("rules.html", title='RESULTS', attributes=attrs, target_attr=target_attr, rules=rules, tables=[default_rule.to_html(classes='data')], titles=default_rule.columns.values, default_conclusion=default_conclusion)
+            print(rules)
+            # default_rule = pd.DataFrame(default_rule)
+            return render_template("rules.html", title='RESULTS', attributes=attrs, target_attr=target_attr, rules=rules) # tables=[default_rule.to_html(classes='data')], titles=default_rule.columns.values, default_conclusion=default_conclusion)
     return '''
     <!DOCTYPE html>
         <html>

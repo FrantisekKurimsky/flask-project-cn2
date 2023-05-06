@@ -74,25 +74,24 @@ def cn2(data, attributes, target_attr):
     negatives = [record for record in data if record[target_attr] == "no"]
 
     # Start the algorithm
-    pbar = None
-    with tqdm(total=len(attributes), desc="CN2 Algorithm") as pbar:
+    # pbar = None
+    length_attr = len(attributes)
+    for i in range(length_attr):
         while positives:
             # Select the best attribute and its corresponding subset
             best_subset, best_attr = None, None
             max_gain_ratio = 0
             for attr in attributes:
                 for value in attribute_values(data, attr):
-                    subset = [
-                        record for record in positives if record[attr] == value]
-                    gain_ratio = gain_ratio_nominal(
-                        data, attr, target_attr, subset, positives, negatives)
+                    subset = [record for record in positives if record[attr] == value]
+                    gain_ratio = gain_ratio_nominal(data, attr, target_attr, subset, positives, negatives)
                     if gain_ratio > max_gain_ratio:
                         best_subset, best_attr, max_gain_ratio = subset, attr, gain_ratio
             if max_gain_ratio == 0:
                 break
             rule = {"attribute": best_attr, "subset": best_subset}
             attributes.remove(best_attr)
-            pbar.update(1)
+            # pbar.update(1)
 
             # Remove the covered examples from the positive examples
             positives = [
